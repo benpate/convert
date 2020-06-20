@@ -10,3 +10,22 @@
 
 It's not rocket science.  It's just a bunch of functions that convert from one type into another (very similar) type.  I'm sure someone else out there has already done it, and probably better, too.  You should use their library instead.
 
+### Int(interface{}) (int, *derp.Error)
+Tries to convert anything into an Integer.  If unsuccessful, it returns a non-nil error
+
+### Int32(interface{}) (int, *derp.Error)
+Tries to convert anything into an int32.  If unsuccessful, it returns a non-nil error
+
+### Int64(interface{}) (int, *derp.Error)
+Tries to convert anything into an int64.  If unsuccessful, it returns a non-nil error
+
+### Float32(interface{}) (float32, *derp.Error)
+Tries to convert anything into an float32.  If unsuccessful, it returns a non-nil error
+
+### Float64(interface{}) (64, *derp.Error)
+Tries to convert anything into an float64.  If unsuccessful, it returns a non-nil error
+
+
+## Pull Requests Welcome
+
+This library is a work in progress, and will benefit from your experience reports, use cases, and contributions.  If you have an idea for making Rosetta better, send in a pull request.  We're all in this together! 🚀
