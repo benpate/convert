@@ -39,3 +39,44 @@ func TestString(t *testing.T) {
 		assert.Equal(t, result, "")
 	}
 }
+
+func TestIntToString(t *testing.T) {
+
+	// Test Ints
+
+	{
+		result, err := String(int(10))
+
+		assert.Nil(t, err)
+		assert.Equal(t, result, "10")
+	}
+
+	{
+		result, err := String(int8(10))
+
+		assert.Nil(t, err)
+		assert.Equal(t, result, "10")
+	}
+
+	{
+		result, err := String(int16(10))
+
+		assert.Nil(t, err)
+		assert.Equal(t, result, "10")
+	}
+
+	{
+		result, err := String(int32(10))
+
+		assert.Nil(t, err)
+		assert.Equal(t, result, "10")
+	}
+
+	{
+		result, err := String(int64(10))
+
+		assert.Nil(t, err)
+		assert.Equal(t, result, "10")
+	}
+
+}
