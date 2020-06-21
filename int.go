@@ -57,7 +57,7 @@ func Int(value interface{}) (int, *derp.Error) {
 		result, err := strconv.Atoi(v)
 
 		if err != nil {
-			return 0, derp.New(500, "convert.Int", "Not a valid integer", value, err)
+			return 0, derp.Wrap(err, "convert.Int", "Not a valid integer", value)
 		}
 
 		return result, nil

@@ -57,7 +57,7 @@ func Float32(value interface{}) (float32, *derp.Error) {
 		result, err := strconv.ParseFloat(v, 32)
 
 		if err != nil {
-			return 0, derp.New(500, "convert.Float32", "Not a valid float32", value, err)
+			return 0, derp.Wrap(err, "convert.Float32", "Not a valid float32", value)
 		}
 
 		return float32(result), nil

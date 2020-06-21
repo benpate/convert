@@ -57,7 +57,7 @@ func Int32(value interface{}) (int32, *derp.Error) {
 		result, err := strconv.ParseInt(v, 10, 32)
 
 		if err != nil {
-			return 0, derp.New(500, "convert.Int32", "Not a valid integer", value, err)
+			return 0, derp.Wrap(err, "convert.Int32", "Not a valid integer", value)
 		}
 
 		return int32(result), nil

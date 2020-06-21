@@ -57,7 +57,7 @@ func Float64(value interface{}) (float64, *derp.Error) {
 		result, err := strconv.ParseFloat(v, 64)
 
 		if err != nil {
-			return 0, derp.New(500, "convert.Float64", "Not a valid float64", value, err)
+			return 0, derp.Wrap(err, "convert.Float64", "Not a valid float64", value)
 		}
 
 		return result, nil
