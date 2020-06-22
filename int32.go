@@ -9,6 +9,10 @@ import (
 // Int32 tries to convert an arbitrary value into an integer
 func Int32(value interface{}) (int32, *derp.Error) {
 
+	if value == nil {
+		return int32(0), derp.New(500, "convert.Int32", "null pointer")
+	}
+
 	switch v := value.(type) {
 
 	case int:

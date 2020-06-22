@@ -9,6 +9,10 @@ import (
 // Int tries to convert an arbitrary value into an integer
 func Int(value interface{}) (int, *derp.Error) {
 
+	if value == nil {
+		return int(0), derp.New(500, "convert.Int", "null pointer")
+	}
+
 	switch v := value.(type) {
 
 	case int:
@@ -63,5 +67,5 @@ func Int(value interface{}) (int, *derp.Error) {
 		return result, nil
 	}
 
-	return 0, derp.New(500, "convert.Int", "Cannot Convert to Integer", value)
+	return 0, derp.New(500, "convert.Int", "Cannot convert to Integer", value)
 }

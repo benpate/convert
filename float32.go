@@ -9,6 +9,10 @@ import (
 // Float32 tries to convert an arbitrary value into an float32
 func Float32(value interface{}) (float32, *derp.Error) {
 
+	if value == nil {
+		return float32(0), derp.New(500, "convert.Float32", "null pointer")
+	}
+
 	switch v := value.(type) {
 
 	case int:
@@ -63,5 +67,5 @@ func Float32(value interface{}) (float32, *derp.Error) {
 		return float32(result), nil
 	}
 
-	return 0, derp.New(500, "convert.Float32", "Cannot Convert to float32", value)
+	return 0, derp.New(500, "convert.Float32", "Cannot convert to float32", value)
 }

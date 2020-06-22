@@ -1,6 +1,7 @@
 package convert
 
 import (
+	"io"
 	"strconv"
 
 	"github.com/benpate/derp"
@@ -9,7 +10,12 @@ import (
 // String tries to convert an arbitrary value into a string
 func String(value interface{}) (string, *derp.Error) {
 
+	if value == nil {
+		return "", derp.New(500, "convert.String", "null pointer")
+	}
+
 	switch v := value.(type) {
+
 	case string:
 		return v, nil
 
@@ -18,6 +24,15 @@ func String(value interface{}) (string, *derp.Error) {
 
 	case []byte:
 		return string(v), nil
+
+	case io.Reader:
+		var buffer []byte
+
+		if _, err := v.Read(buffer); err != nil {
+			return "", derp.Wrap(err, "convert.String", "Error reading io.Reader")
+		}
+
+		return string(buffer), nil
 
 	case int:
 		return strconv.Itoa(v), nil

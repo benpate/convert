@@ -9,6 +9,10 @@ import (
 // Float64 tries to convert an arbitrary value into an float64
 func Float64(value interface{}) (float64, *derp.Error) {
 
+	if value == nil {
+		return float64(0), derp.New(500, "convert.Float64", "null pointer")
+	}
+
 	switch v := value.(type) {
 
 	case int:
@@ -63,5 +67,5 @@ func Float64(value interface{}) (float64, *derp.Error) {
 		return result, nil
 	}
 
-	return 0, derp.New(500, "convert.Float64", "Cannot Convert to float64", value)
+	return 0, derp.New(500, "convert.Float64", "Cannot convert to float64", value)
 }

@@ -9,6 +9,10 @@ import (
 // Int64 tries to convert an arbitrary value into an integer
 func Int64(value interface{}) (int64, *derp.Error) {
 
+	if value == nil {
+		return int64(0), derp.New(500, "convert.Int64", "null pointer")
+	}
+
 	switch v := value.(type) {
 
 	case int:
@@ -63,5 +67,5 @@ func Int64(value interface{}) (int64, *derp.Error) {
 		return int64(result), nil
 	}
 
-	return 0, derp.New(500, "convert.Int64", "Cannot Convert to int64", value)
+	return 0, derp.New(500, "convert.Int64", "Cannot convert to int64", value)
 }
