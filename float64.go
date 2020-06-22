@@ -6,6 +6,14 @@ import (
 	"github.com/benpate/derp"
 )
 
+// MustFloat64 forces a conversion from an arbitrary value into a float64.
+// If the value cannot be converted, then the default value for the type is used.
+func MustFloat64(value interface{}) float64 {
+
+	result, _ := Float64(value)
+	return result
+}
+
 // Float64 tries to convert an arbitrary value into an float64
 func Float64(value interface{}) (float64, *derp.Error) {
 

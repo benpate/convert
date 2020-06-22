@@ -6,6 +6,14 @@ import (
 	"github.com/benpate/derp"
 )
 
+// MustInt forces a conversion from an arbitrary value into an int.
+// If the value cannot be converted, then the default value for the type is used.
+func MustInt(value interface{}) int {
+
+	result, _ := Int(value)
+	return result
+}
+
 // Int tries to convert an arbitrary value into an integer
 func Int(value interface{}) (int, *derp.Error) {
 

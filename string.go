@@ -7,6 +7,14 @@ import (
 	"github.com/benpate/derp"
 )
 
+// MustString forces a conversion from an arbitrary value into an string.
+// If the value cannot be converted, then the default value for the type is used.
+func MustString(value interface{}) string {
+
+	result, _ := String(value)
+	return result
+}
+
 // String tries to convert an arbitrary value into a string
 func String(value interface{}) (string, *derp.Error) {
 

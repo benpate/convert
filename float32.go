@@ -6,6 +6,14 @@ import (
 	"github.com/benpate/derp"
 )
 
+// MustFloat32 forces a conversion from an arbitrary value into a float32.
+// If the value cannot be converted, then the default value for the type is used.
+func MustFloat32(value interface{}) float32 {
+
+	result, _ := Float32(value)
+	return result
+}
+
 // Float32 tries to convert an arbitrary value into an float32
 func Float32(value interface{}) (float32, *derp.Error) {
 

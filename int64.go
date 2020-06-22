@@ -6,6 +6,14 @@ import (
 	"github.com/benpate/derp"
 )
 
+// MustInt64 forces a conversion from an arbitrary value into an int64.
+// If the value cannot be converted, then the default value for the type is used.
+func MustInt64(value interface{}) int64 {
+
+	result, _ := Int64(value)
+	return result
+}
+
 // Int64 tries to convert an arbitrary value into an integer
 func Int64(value interface{}) (int64, *derp.Error) {
 

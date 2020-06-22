@@ -6,6 +6,14 @@ import (
 	"github.com/benpate/derp"
 )
 
+// MustInt32 forces a conversion from an arbitrary value into an int32.
+// If the value cannot be converted, then the default value for the type is used.
+func MustInt32(value interface{}) int32 {
+
+	result, _ := Int32(value)
+	return result
+}
+
 // Int32 tries to convert an arbitrary value into an integer
 func Int32(value interface{}) (int32, *derp.Error) {
 
