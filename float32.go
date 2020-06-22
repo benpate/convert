@@ -74,6 +74,9 @@ func Float32Ok(value interface{}) (float32, bool) {
 		}
 
 		return float32(result), true
+
+	case Stringer:
+		return Float32Ok(v.String())
 	}
 
 	return 0, false

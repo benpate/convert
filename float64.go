@@ -74,6 +74,9 @@ func Float64Ok(value interface{}) (float64, bool) {
 		}
 
 		return result, true
+
+	case Stringer:
+		return Float64Ok(v.String())
 	}
 
 	return 0, false

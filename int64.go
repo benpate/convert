@@ -74,6 +74,9 @@ func Int64Ok(value interface{}) (int64, bool) {
 		}
 
 		return int64(result), true
+
+	case Stringer:
+		return Int64Ok(v.String())
 	}
 
 	return 0, false

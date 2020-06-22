@@ -74,6 +74,9 @@ func IntOk(value interface{}) (int, bool) {
 		}
 
 		return result, true
+
+	case Stringer:
+		return IntOk(v.String())
 	}
 
 	return 0, false

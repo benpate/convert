@@ -74,6 +74,9 @@ func Int32Ok(value interface{}) (int32, bool) {
 		}
 
 		return int32(result), true
+
+	case Stringer:
+		return Int32Ok(v.String())
 	}
 
 	return 0, false

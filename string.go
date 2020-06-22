@@ -5,6 +5,11 @@ import (
 	"strconv"
 )
 
+// Stringer enables a custom type to facilitate conversions to Strings.
+type Stringer interface {
+	String() string
+}
+
 // String forces a conversion from an arbitrary value into an string.
 // If the value cannot be converted, then the default value for the type is used.
 func String(value interface{}, defaultValue string) string {
@@ -26,6 +31,9 @@ func StringOk(value interface{}) (string, bool) {
 	}
 
 	switch v := value.(type) {
+
+	case Stringer:
+		return v.String(), true
 
 	case string:
 		return v, true
