@@ -13,16 +13,16 @@ func TestFloatToInt64(t *testing.T) {
 	// Test Floats
 
 	{
-		result, err := Int64(float32(10))
+		result, ok := Int64Ok(float32(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, err := Int64(float64(10))
+		result, ok := Int64Ok(float64(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
@@ -30,17 +30,17 @@ func TestFloatToInt64(t *testing.T) {
 
 	{
 		input := float32(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
 		input := float64(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 }
@@ -50,37 +50,37 @@ func TestIntToInt64(t *testing.T) {
 	// Test Ints
 
 	{
-		result, err := Int64(int(10))
+		result, ok := Int64Ok(int(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, err := Int64(int8(10))
+		result, ok := Int64Ok(int8(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, err := Int64(int16(10))
+		result, ok := Int64Ok(int16(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, err := Int64(int32(10))
+		result, ok := Int64Ok(int32(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, err := Int64(int64(10))
+		result, ok := Int64Ok(int64(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
@@ -88,41 +88,41 @@ func TestIntToInt64(t *testing.T) {
 
 	{
 		input := int(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
 		input := int8(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
 		input := int16(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
 		input := int32(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
 		input := int64(10)
-		result, err := Int64(&input)
+		result, ok := Int64Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 }
@@ -130,16 +130,16 @@ func TestIntToInt64(t *testing.T) {
 func TestStringToInt64(t *testing.T) {
 
 	{
-		result, err := Int64("10")
+		result, ok := Int64Ok("10")
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, err := Int64("invalid")
+		result, ok := Int64Ok("invalid")
 
-		assert.NotNil(t, err)
+		assert.False(t, ok)
 		assert.Equal(t, result, int64(0))
 	}
 }
@@ -147,9 +147,9 @@ func TestStringToInt64(t *testing.T) {
 func TestInvalidToInt64(t *testing.T) {
 
 	{
-		result, err := Int64(map[string]interface{}{})
+		result, ok := Int64Ok(map[string]interface{}{})
 
-		assert.NotNil(t, err)
+		assert.False(t, ok)
 		assert.Equal(t, result, int64(0))
 	}
 }

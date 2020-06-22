@@ -11,31 +11,31 @@ import (
 func TestString(t *testing.T) {
 
 	{
-		result, err := String("Hello there")
+		result, ok := StringOk("Hello there")
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "Hello there")
 	}
 
 	{
 		pointer := "I have the high ground."
-		result, err := String(&pointer)
+		result, ok := StringOk(&pointer)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "I have the high ground.")
 	}
 
 	{
-		result, err := String([]byte("...from a certain point of view."))
+		result, ok := StringOk([]byte("...from a certain point of view."))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "...from a certain point of view.")
 	}
 
 	{
-		result, err := String(map[string]interface{}{})
+		result, ok := StringOk(map[string]interface{}{})
 
-		assert.NotNil(t, err)
+		assert.False(t, ok)
 		assert.Equal(t, result, "")
 	}
 }
@@ -45,37 +45,37 @@ func TestIntToString(t *testing.T) {
 	// Test Ints
 
 	{
-		result, err := String(int(10))
+		result, ok := StringOk(int(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, err := String(int8(10))
+		result, ok := StringOk(int8(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, err := String(int16(10))
+		result, ok := StringOk(int16(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, err := String(int32(10))
+		result, ok := StringOk(int32(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, err := String(int64(10))
+		result, ok := StringOk(int64(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, "10")
 	}
 

@@ -2,78 +2,76 @@ package convert
 
 import (
 	"strconv"
-
-	"github.com/benpate/derp"
 )
 
-// MustInt forces a conversion from an arbitrary value into an int.
+// Int forces a conversion from an arbitrary value into an int.
 // If the value cannot be converted, then the default value for the type is used.
-func MustInt(value interface{}) int {
+func Int(value interface{}) int {
 
-	result, _ := Int(value)
+	result, _ := IntOk(value)
 	return result
 }
 
-// Int tries to convert an arbitrary value into an integer
-func Int(value interface{}) (int, *derp.Error) {
+// IntOk tries to convert an arbitrary value into an integer
+func IntOk(value interface{}) (int, bool) {
 
 	if value == nil {
-		return int(0), derp.New(500, "convert.Int", "null pointer")
+		return int(0), false
 	}
 
 	switch v := value.(type) {
 
 	case int:
-		return int(v), nil
+		return int(v), true
 
 	case int8:
-		return int(v), nil
+		return int(v), true
 
 	case int16:
-		return int(v), nil
+		return int(v), true
 
 	case int32:
-		return int(v), nil
+		return int(v), true
 
 	case int64:
-		return int(v), nil
+		return int(v), true
 
 	case float32:
-		return int(v), nil
+		return int(v), true
 
 	case float64:
-		return int(v), nil
+		return int(v), true
 
 	case *int:
-		return int(*v), nil
+		return int(*v), true
 
 	case *int8:
-		return int(*v), nil
+		return int(*v), true
 
 	case *int16:
-		return int(*v), nil
+		return int(*v), true
 
 	case *int32:
-		return int(*v), nil
+		return int(*v), true
 
 	case *int64:
-		return int(*v), nil
+		return int(*v), true
 
 	case *float32:
-		return int(*v), nil
+		return int(*v), true
 
 	case *float64:
-		return int(*v), nil
+		return int(*v), true
 
 	case string:
 		result, err := strconv.Atoi(v)
 
 		if err != nil {
-			return 0, derp.Wrap(err, "convert.Int", "Not a valid integer", value)
+			return 0, false
 		}
 
-		return result, nil
+		return result, true
 	}
 
-	return 0, derp.New(500, "convert.Int", "Cannot convert to Integer", value)
+	return 0, false
 }

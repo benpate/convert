@@ -2,78 +2,76 @@ package convert
 
 import (
 	"strconv"
-
-	"github.com/benpate/derp"
 )
 
-// MustFloat32 forces a conversion from an arbitrary value into a float32.
+// Float32 forces a conversion from an arbitrary value into a float32.
 // If the value cannot be converted, then the default value for the type is used.
-func MustFloat32(value interface{}) float32 {
+func Float32(value interface{}) float32 {
 
-	result, _ := Float32(value)
+	result, _ := Float32Ok(value)
 	return result
 }
 
-// Float32 tries to convert an arbitrary value into an float32
-func Float32(value interface{}) (float32, *derp.Error) {
+// Float32Ok tries to convert an arbitrary value into an float32
+func Float32Ok(value interface{}) (float32, bool) {
 
 	if value == nil {
-		return float32(0), derp.New(500, "convert.Float32", "null pointer")
+		return float32(0), false
 	}
 
 	switch v := value.(type) {
 
 	case int:
-		return float32(v), nil
+		return float32(v), true
 
 	case int8:
-		return float32(v), nil
+		return float32(v), true
 
 	case int16:
-		return float32(v), nil
+		return float32(v), true
 
 	case int32:
-		return float32(v), nil
+		return float32(v), true
 
 	case int64:
-		return float32(v), nil
+		return float32(v), true
 
 	case float32:
-		return float32(v), nil
+		return float32(v), true
 
 	case float64:
-		return float32(v), nil
+		return float32(v), true
 
 	case *int:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case *int8:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case *int16:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case *int32:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case *int64:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case *float32:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case *float64:
-		return float32(*v), nil
+		return float32(*v), true
 
 	case string:
 		result, err := strconv.ParseFloat(v, 32)
 
 		if err != nil {
-			return 0, derp.Wrap(err, "convert.Float32", "Not a valid float32", value)
+			return 0, false
 		}
 
-		return float32(result), nil
+		return float32(result), true
 	}
 
-	return 0, derp.New(500, "convert.Float32", "Cannot convert to float32", value)
+	return 0, false
 }

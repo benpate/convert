@@ -3,61 +3,61 @@ package convert
 import (
 	"io"
 	"strconv"
-
-	"github.com/benpate/derp"
 )
 
-// MustString forces a conversion from an arbitrary value into an string.
+// String forces a conversion from an arbitrary value into an string.
 // If the value cannot be converted, then the default value for the type is used.
-func MustString(value interface{}) string {
+func String(value interface{}) string {
 
-	result, _ := String(value)
+	result, _ := StringOk(value)
 	return result
 }
 
-// String tries to convert an arbitrary value into a string
-func String(value interface{}) (string, *derp.Error) {
+// StringOk tries to convert an arbitrary value into a string.
+// If the value provided cannot be converted into a string, this
+// function returns the default string value, and FALSE.
+func StringOk(value interface{}) (string, bool) {
 
 	if value == nil {
-		return "", derp.New(500, "convert.String", "null pointer")
+		return "", false
 	}
 
 	switch v := value.(type) {
 
 	case string:
-		return v, nil
+		return v, true
 
 	case *string:
-		return *v, nil
+		return *v, true
 
 	case []byte:
-		return string(v), nil
+		return string(v), true
 
 	case io.Reader:
 		var buffer []byte
 
 		if _, err := v.Read(buffer); err != nil {
-			return "", derp.Wrap(err, "convert.String", "Error reading io.Reader")
+			return "", false
 		}
 
-		return string(buffer), nil
+		return string(buffer), true
 
 	case int:
-		return strconv.Itoa(v), nil
+		return strconv.Itoa(v), true
 
 	case int8:
-		return strconv.FormatInt(int64(v), 10), nil
+		return strconv.FormatInt(int64(v), 10), true
 
 	case int16:
-		return strconv.FormatInt(int64(v), 10), nil
+		return strconv.FormatInt(int64(v), 10), true
 
 	case int32:
-		return strconv.FormatInt(int64(v), 10), nil
+		return strconv.FormatInt(int64(v), 10), true
 
 	case int64:
-		return strconv.FormatInt(v, 10), nil
+		return strconv.FormatInt(v, 10), true
 
 	default:
-		return "", derp.New(500, "convert.String", "Not a valid string", value)
+		return "", false
 	}
 }

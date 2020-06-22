@@ -2,78 +2,76 @@ package convert
 
 import (
 	"strconv"
-
-	"github.com/benpate/derp"
 )
 
-// MustInt64 forces a conversion from an arbitrary value into an int64.
+// Int64 forces a conversion from an arbitrary value into an int64.
 // If the value cannot be converted, then the default value for the type is used.
-func MustInt64(value interface{}) int64 {
+func Int64(value interface{}) int64 {
 
-	result, _ := Int64(value)
+	result, _ := Int64Ok(value)
 	return result
 }
 
-// Int64 tries to convert an arbitrary value into an integer
-func Int64(value interface{}) (int64, *derp.Error) {
+// Int64Ok tries to convert an arbitrary value into an integer
+func Int64Ok(value interface{}) (int64, bool) {
 
 	if value == nil {
-		return int64(0), derp.New(500, "convert.Int64", "null pointer")
+		return int64(0), false
 	}
 
 	switch v := value.(type) {
 
 	case int:
-		return int64(v), nil
+		return int64(v), true
 
 	case int8:
-		return int64(v), nil
+		return int64(v), true
 
 	case int16:
-		return int64(v), nil
+		return int64(v), true
 
 	case int32:
-		return int64(v), nil
+		return int64(v), true
 
 	case int64:
-		return int64(v), nil
+		return int64(v), true
 
 	case float32:
-		return int64(v), nil
+		return int64(v), true
 
 	case float64:
-		return int64(v), nil
+		return int64(v), true
 
 	case *int:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case *int8:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case *int16:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case *int32:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case *int64:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case *float32:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case *float64:
-		return int64(*v), nil
+		return int64(*v), true
 
 	case string:
 		result, err := strconv.ParseInt(v, 10, 64)
 
 		if err != nil {
-			return 0, derp.Wrap(err, "convert.Int64", "Not a valid int64", value)
+			return 0, false
 		}
 
-		return int64(result), nil
+		return int64(result), true
 	}
 
-	return 0, derp.New(500, "convert.Int64", "Cannot convert to int64", value)
+	return 0, false
 }

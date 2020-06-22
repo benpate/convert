@@ -13,16 +13,16 @@ func TestFloatToFloat32(t *testing.T) {
 	// Test Floats
 
 	{
-		result, err := Float32(float32(10))
+		result, ok := Float32Ok(float32(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, err := Float32(float64(10))
+		result, ok := Float32Ok(float64(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
@@ -30,17 +30,17 @@ func TestFloatToFloat32(t *testing.T) {
 
 	{
 		input := float32(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
 		input := float64(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 }
@@ -50,37 +50,37 @@ func TestIntToFloat32(t *testing.T) {
 	// Test Ints
 
 	{
-		result, err := Float32(int(10))
+		result, ok := Float32Ok(int(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, err := Float32(int8(10))
+		result, ok := Float32Ok(int8(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, err := Float32(int16(10))
+		result, ok := Float32Ok(int16(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, err := Float32(int32(10))
+		result, ok := Float32Ok(int32(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, err := Float32(int64(10))
+		result, ok := Float32Ok(int64(10))
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
@@ -88,41 +88,41 @@ func TestIntToFloat32(t *testing.T) {
 
 	{
 		input := int(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
 		input := int8(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
 		input := int16(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
 		input := int32(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
 		input := int64(10)
-		result, err := Float32(&input)
+		result, ok := Float32Ok(&input)
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 }
@@ -130,16 +130,16 @@ func TestIntToFloat32(t *testing.T) {
 func TestStringToFloat32(t *testing.T) {
 
 	{
-		result, err := Float32("10")
+		result, ok := Float32Ok("10")
 
-		assert.Nil(t, err)
+		assert.True(t, ok)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, err := Float32("invalid")
+		result, ok := Float32Ok("invalid")
 
-		assert.NotNil(t, err)
+		assert.False(t, ok)
 		assert.Equal(t, result, float32(0))
 	}
 }
@@ -147,9 +147,9 @@ func TestStringToFloat32(t *testing.T) {
 func TestInvalidToFloat32(t *testing.T) {
 
 	{
-		result, err := Float32(map[string]interface{}{})
+		result, ok := Float32Ok(map[string]interface{}{})
 
-		assert.NotNil(t, err)
+		assert.False(t, ok)
 		assert.Equal(t, result, float32(0))
 	}
 }
