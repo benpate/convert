@@ -6,10 +6,13 @@ import (
 
 // Int forces a conversion from an arbitrary value into an int.
 // If the value cannot be converted, then the default value for the type is used.
-func Int(value interface{}) int {
+func Int(value interface{}, defaultValue int) int {
 
-	result, _ := IntOk(value)
-	return result
+	if result, ok := IntOk(value); ok {
+		return result
+	}
+
+	return defaultValue
 }
 
 // IntOk tries to convert an arbitrary value into an integer

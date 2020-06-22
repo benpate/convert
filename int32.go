@@ -6,10 +6,13 @@ import (
 
 // Int32 forces a conversion from an arbitrary value into an int32.
 // If the value cannot be converted, then the default value for the type is used.
-func Int32(value interface{}) int32 {
+func Int32(value interface{}, defaultValue int32) int32 {
 
-	result, _ := Int32Ok(value)
-	return result
+	if result, ok := Int32Ok(value); ok {
+		return result
+	}
+
+	return defaultValue
 }
 
 // Int32Ok tries to convert an arbitrary value into an integer

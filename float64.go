@@ -6,10 +6,13 @@ import (
 
 // Float64 forces a conversion from an arbitrary value into a float64.
 // If the value cannot be converted, then the default value for the type is used.
-func Float64(value interface{}) float64 {
+func Float64(value interface{}, defaultValue float64) float64 {
 
-	result, _ := Float64Ok(value)
-	return result
+	if result, ok := Float64Ok(value); ok {
+		return result
+	}
+
+	return defaultValue
 }
 
 // Float64Ok tries to convert an arbitrary value into an float64

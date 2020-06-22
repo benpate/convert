@@ -6,10 +6,13 @@ import (
 
 // Int64 forces a conversion from an arbitrary value into an int64.
 // If the value cannot be converted, then the default value for the type is used.
-func Int64(value interface{}) int64 {
+func Int64(value interface{}, defaultValue int64) int64 {
 
-	result, _ := Int64Ok(value)
-	return result
+	if result, ok := Int64Ok(value); ok {
+		return result
+	}
+
+	return defaultValue
 }
 
 // Int64Ok tries to convert an arbitrary value into an integer

@@ -7,10 +7,13 @@ import (
 
 // String forces a conversion from an arbitrary value into an string.
 // If the value cannot be converted, then the default value for the type is used.
-func String(value interface{}) string {
+func String(value interface{}, defaultValue string) string {
 
-	result, _ := StringOk(value)
-	return result
+	if result, ok := StringOk(value); ok {
+		return result
+	}
+
+	return defaultValue
 }
 
 // StringOk tries to convert an arbitrary value into a string.
