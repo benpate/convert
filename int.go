@@ -5,8 +5,16 @@ import (
 )
 
 // Int forces a conversion from an arbitrary value into an int.
-// If the value cannot be converted, then the default value for the type is used.
-func Int(value interface{}, defaultValue int) int {
+// If the value cannot be converted, then the zero value for the type (0) is used.
+func Int(value interface{}) int {
+
+	result, _ := NaturalInt(value, 0)
+	return result
+}
+
+// IntDefault forces a conversion from an arbitrary value into a int.
+// if the value cannot be converted, then the default value is used.
+func IntDefault(value interface{}, defaultValue int) int {
 
 	result, _ := NaturalInt(value, defaultValue)
 	return result

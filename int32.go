@@ -5,8 +5,16 @@ import (
 )
 
 // Int32 forces a conversion from an arbitrary value into an int32.
-// If the value cannot be converted, then the default value for the type is used.
+// If the value cannot be converted, then the zero value for the type (0) is used.
 func Int32(value interface{}, defaultValue int32) int32 {
+
+	result, _ := NaturalInt32(value, defaultValue)
+	return result
+}
+
+// Int32Default forces a conversion from an arbitrary value into a int32.
+// if the value cannot be converted, then the default value is used.
+func Int32Default(value interface{}, defaultValue int32) int32 {
 
 	result, _ := NaturalInt32(value, defaultValue)
 	return result

@@ -2,7 +2,15 @@ package convert
 
 // Bool forces a conversion from an arbitrary value into a boolean.
 // If the value cannot be converted, then the default value for the type is used.
-func Bool(value interface{}, defaultValue bool) bool {
+func Bool(value interface{}) bool {
+
+	result, _ := NaturalBool(value, false)
+	return result
+}
+
+// BoolDefault forces a conversion from an arbitrary value into a bool.
+// if the value cannot be converted, then the default value is used.
+func BoolDefault(value interface{}, defaultValue bool) bool {
 
 	result, _ := NaturalBool(value, defaultValue)
 	return result

@@ -5,8 +5,16 @@ import (
 )
 
 // Float64 forces a conversion from an arbitrary value into a float64.
-// If the value cannot be converted, then the default value for the type is used.
-func Float64(value interface{}, defaultValue float64) float64 {
+// If the value cannot be converted, then the zero value for the type (false) is used.
+func Float64(value interface{}) float64 {
+
+	result, _ := NaturalFloat64(value, 0)
+	return result
+}
+
+// Float64Default forces a conversion from an arbitrary value into a float64.
+// if the value cannot be converted, then the default value is used.
+func Float64Default(value interface{}, defaultValue float64) float64 {
 
 	result, _ := NaturalFloat64(value, defaultValue)
 	return result

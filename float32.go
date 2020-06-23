@@ -6,7 +6,15 @@ import (
 
 // Float32 forces a conversion from an arbitrary value into a float32.
 // If the value cannot be converted, then the default value for the type is used.
-func Float32(value interface{}, defaultValue float32) float32 {
+func Float32(value interface{}) float32 {
+
+	result, _ := NaturalFloat32(value, 0)
+	return result
+}
+
+// Float32Default forces a conversion from an arbitrary value into a float32.
+// if the value cannot be converted, then the default value is used.
+func Float32Default(value interface{}, defaultValue float32) float32 {
 
 	result, _ := NaturalFloat32(value, defaultValue)
 	return result
