@@ -8,121 +8,61 @@ import (
 
 // TODO: Thes tests still dont account for overflow errors.
 
-func TestFloatToFloat32(t *testing.T) {
+func TestNilToFloat32(t *testing.T) {
 
-	// Test Floats
+	result, natural := NaturalFloat32(nil, float32(-1))
+	assert.Equal(t, result, float32(-1))
+	assert.False(t, natural)
+}
 
-	{
-		result, ok := Float32Ok(float32(10))
+func TestFloat32ToFloat32(t *testing.T) {
 
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
+	assert.Equal(t, float32(10), Float32(float32(10), -1))
+	assert.Equal(t, float32(-1), Float32("hello", -1))
+}
 
-	{
-		result, ok := Float32Ok(float64(10))
+func TestFloat64ToFloat32(t *testing.T) {
 
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
+	result, natural := NaturalFloat32(float64(10), -1)
 
-	// Test Float Pointers
-
-	{
-		input := float32(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
-
-	{
-		input := float64(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
+	assert.True(t, natural)
+	assert.Equal(t, result, float32(10))
 }
 
 func TestIntToFloat32(t *testing.T) {
 
-	// Test Ints
-
 	{
-		result, ok := Float32Ok(int(10))
+		result, natural := NaturalFloat32(int(10), -1)
 
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, ok := Float32Ok(int8(10))
+		result, natural := NaturalFloat32(int8(10), -1)
 
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, ok := Float32Ok(int16(10))
+		result, natural := NaturalFloat32(int16(10), -1)
 
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, ok := Float32Ok(int32(10))
+		result, natural := NaturalFloat32(int32(10), -1)
 
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, ok := Float32Ok(int64(10))
+		result, natural := NaturalFloat32(int64(10), -1)
 
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
-
-	// Test Int Pointers
-
-	{
-		input := int(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
-
-	{
-		input := int8(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
-
-	{
-		input := int16(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
-
-	{
-		input := int32(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, float32(10))
-	}
-
-	{
-		input := int64(10)
-		result, ok := Float32Ok(&input)
-
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, float32(10))
 	}
 }
@@ -130,26 +70,43 @@ func TestIntToFloat32(t *testing.T) {
 func TestStringToFloat32(t *testing.T) {
 
 	{
-		result, ok := Float32Ok("10")
+		result, natural := NaturalFloat32("10", -1)
 
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, float32(10))
 	}
 
 	{
-		result, ok := Float32Ok("invalid")
+		result, natural := NaturalFloat32("invalid", -1)
 
-		assert.False(t, ok)
-		assert.Equal(t, result, float32(0))
+		assert.False(t, natural)
+		assert.Equal(t, result, float32(-1))
+	}
+}
+
+func TestStringerToFloat32(t *testing.T) {
+
+	s := getTestStringer()
+
+	{
+		result, natural := NaturalFloat32(s, -1)
+
+		assert.False(t, natural)
+		assert.Equal(t, result, float32(-1))
+	}
+
+	s[0] = "100"
+	{
+		result, natural := NaturalFloat32(s, -1)
+
+		assert.False(t, natural)
+		assert.Equal(t, result, float32(100))
 	}
 }
 
 func TestInvalidToFloat32(t *testing.T) {
+	result, natural := NaturalFloat32(map[string]interface{}{}, -1)
 
-	{
-		result, ok := Float32Ok(map[string]interface{}{})
-
-		assert.False(t, ok)
-		assert.Equal(t, result, float32(0))
-	}
+	assert.False(t, natural)
+	assert.Equal(t, result, float32(-1))
 }

@@ -8,18 +8,18 @@ import (
 // If the value cannot be converted, then the default value for the type is used.
 func Int64(value interface{}, defaultValue int64) int64 {
 
-	if result, ok := Int64Ok(value); ok {
-		return result
-	}
+	result, _ := NaturalInt64(value, defaultValue)
+	return result
 
-	return defaultValue
 }
 
-// Int64Ok tries to convert an arbitrary value into an integer
-func Int64Ok(value interface{}) (int64, bool) {
+// NaturalInt64 converts an arbitrary value (passed in the first parameter) into an int64, no matter what.
+// The first result is the final converted value, or the default value (passed in the second parameter)
+// The second result is TRUE if the value was naturally an integer, and FALSE otherwise
+func NaturalInt64(value interface{}, defaultValue int64) (int64, bool) {
 
 	if value == nil {
-		return int64(0), false
+		return defaultValue, false
 	}
 
 	switch v := value.(type) {
@@ -40,44 +40,23 @@ func Int64Ok(value interface{}) (int64, bool) {
 		return int64(v), true
 
 	case float32:
-		return int64(v), true
+		return int64(v), false
 
 	case float64:
-		return int64(v), true
-
-	case *int:
-		return int64(*v), true
-
-	case *int8:
-		return int64(*v), true
-
-	case *int16:
-		return int64(*v), true
-
-	case *int32:
-		return int64(*v), true
-
-	case *int64:
-		return int64(*v), true
-
-	case *float32:
-		return int64(*v), true
-
-	case *float64:
-		return int64(*v), true
+		return int64(v), false
 
 	case string:
 		result, err := strconv.ParseInt(v, 10, 64)
 
 		if err != nil {
-			return 0, false
+			return defaultValue, false
 		}
 
-		return int64(result), true
+		return int64(result), false
 
 	case Stringer:
-		return Int64Ok(v.String())
+		return NaturalInt64(v.String(), defaultValue)
 	}
 
-	return 0, false
+	return defaultValue, false
 }

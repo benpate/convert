@@ -8,121 +8,69 @@ import (
 
 // TODO: Thes tests still dont account for overflow errors.
 
-func TestFloatToInt64(t *testing.T) {
+func TestInt64(t *testing.T) {
 
-	// Test Floats
+	assert.Equal(t, Int64(10, 10), int64(10))
 
-	{
-		result, ok := Int64Ok(float32(10))
+}
 
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
+func TestNilToInt64(t *testing.T) {
 
-	{
-		result, ok := Int64Ok(float64(10))
+	result, natural := NaturalInt64(nil, -1)
+	assert.Equal(t, result, int64(-1))
+	assert.False(t, natural)
+}
 
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
+func TestFloat32ToInt64(t *testing.T) {
 
-	// Test Float Pointers
+	result, natural := NaturalInt64(float32(10), -1)
 
-	{
-		input := float32(10)
-		result, ok := Int64Ok(&input)
+	assert.False(t, natural)
+	assert.Equal(t, result, int64(10))
+}
 
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
+func TestFloat64ToInt64(t *testing.T) {
 
-	{
-		input := float64(10)
-		result, ok := Int64Ok(&input)
+	result, natural := NaturalInt64(float64(10), -1)
 
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
+	assert.False(t, natural)
+	assert.Equal(t, result, int64(10))
 }
 
 func TestIntToInt64(t *testing.T) {
 
-	// Test Ints
-
 	{
-		result, ok := Int64Ok(int(10))
+		result, natural := NaturalInt64(int(10), -1)
 
-		assert.True(t, ok)
+		assert.True(t, natural)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, ok := Int64Ok(int8(10))
+		result, natural := NaturalInt64(int8(10), -1)
 
-		assert.True(t, ok)
+		assert.True(t, natural)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, ok := Int64Ok(int16(10))
+		result, natural := NaturalInt64(int16(10), -1)
 
-		assert.True(t, ok)
+		assert.True(t, natural)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, ok := Int64Ok(int32(10))
+		result, natural := NaturalInt64(int32(10), -1)
 
-		assert.True(t, ok)
+		assert.True(t, natural)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, ok := Int64Ok(int64(10))
+		result, natural := NaturalInt64(int64(10), -1)
 
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
-
-	// Test Int Pointers
-
-	{
-		input := int(10)
-		result, ok := Int64Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
-
-	{
-		input := int8(10)
-		result, ok := Int64Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
-
-	{
-		input := int16(10)
-		result, ok := Int64Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
-
-	{
-		input := int32(10)
-		result, ok := Int64Ok(&input)
-
-		assert.True(t, ok)
-		assert.Equal(t, result, int64(10))
-	}
-
-	{
-		input := int64(10)
-		result, ok := Int64Ok(&input)
-
-		assert.True(t, ok)
+		assert.True(t, natural)
 		assert.Equal(t, result, int64(10))
 	}
 }
@@ -130,26 +78,43 @@ func TestIntToInt64(t *testing.T) {
 func TestStringToInt64(t *testing.T) {
 
 	{
-		result, ok := Int64Ok("10")
+		result, natural := NaturalInt64("10", -1)
 
-		assert.True(t, ok)
+		assert.False(t, natural)
 		assert.Equal(t, result, int64(10))
 	}
 
 	{
-		result, ok := Int64Ok("invalid")
+		result, natural := NaturalInt64("invalid", -1)
 
-		assert.False(t, ok)
-		assert.Equal(t, result, int64(0))
+		assert.False(t, natural)
+		assert.Equal(t, result, int64(-1))
+	}
+}
+
+func TestStringerToInt64(t *testing.T) {
+
+	s := getTestStringer()
+
+	{
+		result, natural := NaturalInt64(s, -1)
+
+		assert.False(t, natural)
+		assert.Equal(t, result, int64(-1))
+	}
+
+	s[0] = "100"
+	{
+		result, natural := NaturalInt64(s, -1)
+
+		assert.False(t, natural)
+		assert.Equal(t, result, int64(100))
 	}
 }
 
 func TestInvalidToInt64(t *testing.T) {
+	result, natural := NaturalInt64(map[string]interface{}{}, -1)
 
-	{
-		result, ok := Int64Ok(map[string]interface{}{})
-
-		assert.False(t, ok)
-		assert.Equal(t, result, int64(0))
-	}
+	assert.False(t, natural)
+	assert.Equal(t, result, int64(-1))
 }

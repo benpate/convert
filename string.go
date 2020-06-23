@@ -1,7 +1,6 @@
 package convert
 
 import (
-	"io"
 	"strconv"
 )
 
@@ -14,17 +13,14 @@ type Stringer interface {
 // If the value cannot be converted, then the default value for the type is used.
 func String(value interface{}, defaultValue string) string {
 
-	if result, ok := StringOk(value); ok {
-		return result
-	}
-
-	return defaultValue
+	result, _ := NaturalString(value, defaultValue)
+	return result
 }
 
-// StringOk tries to convert an arbitrary value into a string.
-// If the value provided cannot be converted into a string, this
-// function returns the default string value, and FALSE.
-func StringOk(value interface{}) (string, bool) {
+// NaturalString converts an arbitrary value (passed in the first parameter) into a string, no matter what.
+// The first result is the final converted value, or the default value (passed in the second parameter)
+// The second result is TRUE if the value was naturally a string, and FALSE otherwise
+func NaturalString(value interface{}, defaultValue string) (string, bool) {
 
 	if value == nil {
 		return "", false
@@ -32,43 +28,36 @@ func StringOk(value interface{}) (string, bool) {
 
 	switch v := value.(type) {
 
-	case Stringer:
-		return v.String(), true
-
 	case string:
 		return v, true
 
-	case *string:
-		return *v, true
+	case Stringer:
+		return v.String(), false
 
 	case []byte:
 		return string(v), true
 
-	case io.Reader:
-		var buffer []byte
-
-		if _, err := v.Read(buffer); err != nil {
-			return "", false
-		}
-
-		return string(buffer), true
-
 	case int:
-		return strconv.Itoa(v), true
+		return strconv.Itoa(v), false
 
 	case int8:
-		return strconv.FormatInt(int64(v), 10), true
+		return strconv.FormatInt(int64(v), 10), false
 
 	case int16:
-		return strconv.FormatInt(int64(v), 10), true
+		return strconv.FormatInt(int64(v), 10), false
 
 	case int32:
-		return strconv.FormatInt(int64(v), 10), true
+		return strconv.FormatInt(int64(v), 10), false
 
 	case int64:
-		return strconv.FormatInt(v, 10), true
+		return strconv.FormatInt(v, 10), false
 
-	default:
-		return "", false
+	case float32:
+		return strconv.FormatFloat(float64(v), 'f', -2, 64), false
+
+	case float64:
+		return strconv.FormatFloat(v, 'f', -2, 64), false
 	}
+
+	return defaultValue, false
 }

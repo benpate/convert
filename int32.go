@@ -8,18 +8,17 @@ import (
 // If the value cannot be converted, then the default value for the type is used.
 func Int32(value interface{}, defaultValue int32) int32 {
 
-	if result, ok := Int32Ok(value); ok {
-		return result
-	}
-
-	return defaultValue
+	result, _ := NaturalInt32(value, defaultValue)
+	return result
 }
 
-// Int32Ok tries to convert an arbitrary value into an integer
-func Int32Ok(value interface{}) (int32, bool) {
+// NaturalInt32 converts an arbitrary value (passed in the first parameter) into an int32, no matter what.
+// The first result is the final converted value, or the default value (passed in the second parameter)
+// The second result is TRUE if the value was naturally an integer, and FALSE otherwise
+func NaturalInt32(value interface{}, defaultValue int32) (int32, bool) {
 
 	if value == nil {
-		return int32(0), false
+		return defaultValue, false
 	}
 
 	switch v := value.(type) {
@@ -40,44 +39,23 @@ func Int32Ok(value interface{}) (int32, bool) {
 		return int32(v), true
 
 	case float32:
-		return int32(v), true
+		return int32(v), false
 
 	case float64:
-		return int32(v), true
-
-	case *int:
-		return int32(*v), true
-
-	case *int8:
-		return int32(*v), true
-
-	case *int16:
-		return int32(*v), true
-
-	case *int32:
-		return int32(*v), true
-
-	case *int64:
-		return int32(*v), true
-
-	case *float32:
-		return int32(*v), true
-
-	case *float64:
-		return int32(*v), true
+		return int32(v), false
 
 	case string:
 		result, err := strconv.ParseInt(v, 10, 32)
 
 		if err != nil {
-			return 0, false
+			return defaultValue, false
 		}
 
-		return int32(result), true
+		return int32(result), false
 
 	case Stringer:
-		return Int32Ok(v.String())
+		return NaturalInt32(v.String(), defaultValue)
 	}
 
-	return 0, false
+	return defaultValue, false
 }

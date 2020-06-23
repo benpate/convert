@@ -8,36 +8,35 @@ import (
 // If the value cannot be converted, then the default value for the type is used.
 func Float64(value interface{}, defaultValue float64) float64 {
 
-	if result, ok := Float64Ok(value); ok {
-		return result
-	}
-
-	return defaultValue
+	result, _ := NaturalFloat64(value, defaultValue)
+	return result
 }
 
-// Float64Ok tries to convert an arbitrary value into an float64
-func Float64Ok(value interface{}) (float64, bool) {
+// NaturalFloat64 converts an arbitrary value (passed in the first parameter) into a float64, no matter what.
+// The first result is the final converted value, or the default value (passed in the second parameter)
+// The second result is TRUE if the value was naturally a floating point number, and FALSE otherwise
+func NaturalFloat64(value interface{}, defaultValue float64) (float64, bool) {
 
 	if value == nil {
-		return float64(0), false
+		return defaultValue, false
 	}
 
 	switch v := value.(type) {
 
 	case int:
-		return float64(v), true
+		return float64(v), false
 
 	case int8:
-		return float64(v), true
+		return float64(v), false
 
 	case int16:
-		return float64(v), true
+		return float64(v), false
 
 	case int32:
-		return float64(v), true
+		return float64(v), false
 
 	case int64:
-		return float64(v), true
+		return float64(v), false
 
 	case float32:
 		return float64(v), true
@@ -45,39 +44,18 @@ func Float64Ok(value interface{}) (float64, bool) {
 	case float64:
 		return float64(v), true
 
-	case *int:
-		return float64(*v), true
-
-	case *int8:
-		return float64(*v), true
-
-	case *int16:
-		return float64(*v), true
-
-	case *int32:
-		return float64(*v), true
-
-	case *int64:
-		return float64(*v), true
-
-	case *float32:
-		return float64(*v), true
-
-	case *float64:
-		return float64(*v), true
-
 	case string:
 		result, err := strconv.ParseFloat(v, 64)
 
 		if err != nil {
-			return 0, false
+			return defaultValue, false
 		}
 
-		return result, true
+		return result, false
 
 	case Stringer:
-		return Float64Ok(v.String())
+		return NaturalFloat64(v.String(), defaultValue)
 	}
 
-	return 0, false
+	return defaultValue, false
 }
