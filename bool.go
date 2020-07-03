@@ -4,7 +4,7 @@ package convert
 // If the value cannot be converted, then the default value for the type is used.
 func Bool(value interface{}) bool {
 
-	result, _ := NaturalBool(value, false)
+	result, _ := BoolNatural(value, false)
 	return result
 }
 
@@ -12,14 +12,14 @@ func Bool(value interface{}) bool {
 // if the value cannot be converted, then the default value is used.
 func BoolDefault(value interface{}, defaultValue bool) bool {
 
-	result, _ := NaturalBool(value, defaultValue)
+	result, _ := BoolNatural(value, defaultValue)
 	return result
 }
 
-// NaturalBool converts an arbitrary value (passed in the first parameter) into a boolean, somehow, no matter what.
+// BoolNatural converts an arbitrary value (passed in the first parameter) into a boolean, somehow, no matter what.
 // The first result is the final converted value, or the default value (passed in the second parameter)
 // The second result is TRUE if the value was naturally a bool, and FALSE otherwise
-func NaturalBool(value interface{}, defaultValue bool) (bool, bool) {
+func BoolNatural(value interface{}, defaultValue bool) (bool, bool) {
 
 	if value == nil {
 		return defaultValue, false
@@ -61,7 +61,7 @@ func NaturalBool(value interface{}, defaultValue bool) (bool, bool) {
 		}
 
 	case Stringer:
-		return NaturalBool(v.String(), defaultValue)
+		return BoolNatural(v.String(), defaultValue)
 	}
 
 	return defaultValue, false

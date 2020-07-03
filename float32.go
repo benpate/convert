@@ -8,7 +8,7 @@ import (
 // If the value cannot be converted, then the default value for the type is used.
 func Float32(value interface{}) float32 {
 
-	result, _ := NaturalFloat32(value, 0)
+	result, _ := Float32Natural(value, 0)
 	return result
 }
 
@@ -16,14 +16,14 @@ func Float32(value interface{}) float32 {
 // if the value cannot be converted, then the default value is used.
 func Float32Default(value interface{}, defaultValue float32) float32 {
 
-	result, _ := NaturalFloat32(value, defaultValue)
+	result, _ := Float32Natural(value, defaultValue)
 	return result
 }
 
-// NaturalFloat32 converts an arbitrary value (passed in the first parameter) into a float32, somehow, no matter what.
+// Float32Natural converts an arbitrary value (passed in the first parameter) into a float32, somehow, no matter what.
 // The first result is the final converted value, or the default value (passed in the second parameter)
 // The second result is TRUE if the value was naturally a floating point number, and FALSE otherwise
-func NaturalFloat32(value interface{}, defaultValue float32) (float32, bool) {
+func Float32Natural(value interface{}, defaultValue float32) (float32, bool) {
 
 	if value == nil {
 		return defaultValue, false
@@ -62,7 +62,7 @@ func NaturalFloat32(value interface{}, defaultValue float32) (float32, bool) {
 		return float32(result), false
 
 	case Stringer:
-		return NaturalFloat32(v.String(), defaultValue)
+		return Float32Natural(v.String(), defaultValue)
 	}
 
 	return defaultValue, false

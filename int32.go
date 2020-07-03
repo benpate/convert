@@ -8,7 +8,7 @@ import (
 // If the value cannot be converted, then the zero value for the type (0) is used.
 func Int32(value interface{}, defaultValue int32) int32 {
 
-	result, _ := NaturalInt32(value, defaultValue)
+	result, _ := Int32Natural(value, defaultValue)
 	return result
 }
 
@@ -16,14 +16,14 @@ func Int32(value interface{}, defaultValue int32) int32 {
 // if the value cannot be converted, then the default value is used.
 func Int32Default(value interface{}, defaultValue int32) int32 {
 
-	result, _ := NaturalInt32(value, defaultValue)
+	result, _ := Int32Natural(value, defaultValue)
 	return result
 }
 
-// NaturalInt32 converts an arbitrary value (passed in the first parameter) into an int32, no matter what.
+// Int32Natural converts an arbitrary value (passed in the first parameter) into an int32, no matter what.
 // The first result is the final converted value, or the default value (passed in the second parameter)
 // The second result is TRUE if the value was naturally an integer, and FALSE otherwise
-func NaturalInt32(value interface{}, defaultValue int32) (int32, bool) {
+func Int32Natural(value interface{}, defaultValue int32) (int32, bool) {
 
 	if value == nil {
 		return defaultValue, false
@@ -62,7 +62,7 @@ func NaturalInt32(value interface{}, defaultValue int32) (int32, bool) {
 		return int32(result), false
 
 	case Stringer:
-		return NaturalInt32(v.String(), defaultValue)
+		return Int32Natural(v.String(), defaultValue)
 	}
 
 	return defaultValue, false

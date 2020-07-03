@@ -13,7 +13,7 @@ type Stringer interface {
 // If the value cannot be converted, then the default value for the type is used.
 func String(value interface{}) string {
 
-	result, _ := NaturalString(value, "")
+	result, _ := StringNatural(value, "")
 	return result
 }
 
@@ -21,17 +21,17 @@ func String(value interface{}) string {
 // if the value cannot be converted, then the default value is used.
 func StringDefault(value interface{}, defaultValue string) string {
 
-	result, _ := NaturalString(value, defaultValue)
+	result, _ := StringNatural(value, defaultValue)
 	return result
 }
 
-// NaturalString converts an arbitrary value (passed in the first parameter) into a string, no matter what.
+// StringNatural converts an arbitrary value (passed in the first parameter) into a string, no matter what.
 // The first result is the final converted value, or the default value (passed in the second parameter)
 // The second result is TRUE if the value was naturally a string, and FALSE otherwise
-func NaturalString(value interface{}, defaultValue string) (string, bool) {
+func StringNatural(value interface{}, defaultValue string) (string, bool) {
 
 	if value == nil {
-		return "", false
+		return defaultValue, false
 	}
 
 	switch v := value.(type) {

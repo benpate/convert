@@ -8,7 +8,7 @@ import (
 // If the value cannot be converted, then the zero value for the type (0) is used.
 func Int(value interface{}) int {
 
-	result, _ := NaturalInt(value, 0)
+	result, _ := IntNatural(value, 0)
 	return result
 }
 
@@ -16,14 +16,14 @@ func Int(value interface{}) int {
 // if the value cannot be converted, then the default value is used.
 func IntDefault(value interface{}, defaultValue int) int {
 
-	result, _ := NaturalInt(value, defaultValue)
+	result, _ := IntNatural(value, defaultValue)
 	return result
 }
 
-// NaturalInt converts an arbitrary value (passed in the first parameter) into an int, no matter what.
+// IntNatural converts an arbitrary value (passed in the first parameter) into an int, no matter what.
 // The first result is the final converted value, or the default value (passed in the second parameter)
 // The second result is TRUE if the value was naturally an integer, and FALSE otherwise
-func NaturalInt(value interface{}, defaultValue int) (int, bool) {
+func IntNatural(value interface{}, defaultValue int) (int, bool) {
 
 	if value == nil {
 		return defaultValue, false
@@ -62,7 +62,7 @@ func NaturalInt(value interface{}, defaultValue int) (int, bool) {
 		return result, false
 
 	case Stringer:
-		return NaturalInt(v.String(), defaultValue)
+		return IntNatural(v.String(), defaultValue)
 	}
 
 	return defaultValue, false
