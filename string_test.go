@@ -20,14 +20,14 @@ func TestNilToString(t *testing.T) {
 
 func TestStringToString(t *testing.T) {
 
-	result, natural := StringNatural("Hello there", "default")
+	result, natural := StringOk("Hello there", "default")
 
 	assert.True(t, natural)
 	assert.Equal(t, result, "Hello there")
 }
 
 func TestByteArrayToString(t *testing.T) {
-	result, natural := StringNatural([]byte("...from a certain point of view."), "default")
+	result, natural := StringOk([]byte("...from a certain point of view."), "default")
 
 	assert.True(t, natural)
 	assert.Equal(t, result, "...from a certain point of view.")
@@ -36,35 +36,35 @@ func TestByteArrayToString(t *testing.T) {
 func TestIntToString(t *testing.T) {
 
 	{
-		result, natural := StringNatural(int(10), "default")
+		result, natural := StringOk(int(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, natural := StringNatural(int8(10), "default")
+		result, natural := StringOk(int8(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, natural := StringNatural(int16(10), "default")
+		result, natural := StringOk(int16(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, natural := StringNatural(int32(10), "default")
+		result, natural := StringOk(int32(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, natural := StringNatural(int64(10), "default")
+		result, natural := StringOk(int64(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
@@ -74,14 +74,14 @@ func TestIntToString(t *testing.T) {
 func TestFloatToString(t *testing.T) {
 
 	{
-		result, natural := StringNatural(float32(10), "default")
+		result, natural := StringOk(float32(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
 	}
 
 	{
-		result, natural := StringNatural(float64(10), "default")
+		result, natural := StringOk(float64(10), "default")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "10")
@@ -93,7 +93,7 @@ func TestStringerToString(t *testing.T) {
 	s := getTestStringer()
 
 	{
-		result, natural := StringNatural(s, "")
+		result, natural := StringOk(s, "")
 
 		assert.False(t, natural)
 		assert.Equal(t, result, "hello")
@@ -101,7 +101,7 @@ func TestStringerToString(t *testing.T) {
 }
 
 func TestInvalidToString(t *testing.T) {
-	result, natural := StringNatural(map[string]interface{}{}, "default")
+	result, natural := StringOk(map[string]interface{}{}, "default")
 
 	assert.False(t, natural)
 	assert.Equal(t, result, "default")

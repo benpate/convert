@@ -4,16 +4,11 @@ import (
 	"strconv"
 )
 
-// Stringer enables a custom type to facilitate conversions to Strings.
-type Stringer interface {
-	String() string
-}
-
 // String forces a conversion from an arbitrary value into an string.
 // If the value cannot be converted, then the default value for the type is used.
 func String(value interface{}) string {
 
-	result, _ := StringNatural(value, "")
+	result, _ := StringOk(value, "")
 	return result
 }
 
@@ -21,14 +16,23 @@ func String(value interface{}) string {
 // if the value cannot be converted, then the default value is used.
 func StringDefault(value interface{}, defaultValue string) string {
 
-	result, _ := StringNatural(value, defaultValue)
+	result, _ := StringOk(value, defaultValue)
 	return result
 }
 
-// StringNatural converts an arbitrary value (passed in the first parameter) into a string, no matter what.
+// StringOk converts an arbitrary value (passed in the first parameter) into a string, no matter what.
 // The first result is the final converted value, or the default value (passed in the second parameter)
 // The second result is TRUE if the value was naturally a string, and FALSE otherwise
-func StringNatural(value interface{}, defaultValue string) (string, bool) {
+//
+// Conversion Rules:
+// Nils return default value and Ok=false
+// Bools are formated as "true" or "false" with Ok=false
+// Ints are formated as strings with Ok=false
+// Floats are formatted with 2 decimal places, with Ok=false
+// String are passed through directly, with Ok=true
+// Known interfaces (Inter, Floater, Stringer) are handled like their corresponding types.
+// All other values return the default value with Ok=false
+func StringOk(value interface{}, defaultValue string) (string, bool) {
 
 	if value == nil {
 		return defaultValue, false
@@ -36,11 +40,13 @@ func StringNatural(value interface{}, defaultValue string) (string, bool) {
 
 	switch v := value.(type) {
 
-	case string:
-		return v, true
+	case bool:
 
-	case Stringer:
-		return v.String(), false
+		if v == true {
+			return "true", false
+		}
+
+		return "false", false
 
 	case []byte:
 		return string(v), true
@@ -65,6 +71,21 @@ func StringNatural(value interface{}, defaultValue string) (string, bool) {
 
 	case float64:
 		return strconv.FormatFloat(v, 'f', -2, 64), false
+
+	case string:
+		return v, true
+
+	case Booler:
+		return StringOk(v.Bool(), defaultValue)
+
+	case Inter:
+		return strconv.FormatInt(int64(v.Int()), 10), false
+
+	case Floater:
+		return strconv.FormatFloat(v.Float(), 'f', -2, 64), false
+
+	case Stringer:
+		return v.String(), true
 	}
 
 	return defaultValue, false
