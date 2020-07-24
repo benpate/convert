@@ -4,6 +4,7 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/benpate/convert?style=flat-square)](https://goreportcard.com/report/github.com/benpate/convert)
 [![Build Status](http://img.shields.io/travis/benpate/convert.svg?style=flat-square)](https://travis-ci.org/benpate/convert)
 [![Codecov](https://img.shields.io/codecov/c/github/benpate/convert.svg?style=flat-square)](https://codecov.io/gh/benpate/convert)
+![Version](https://img.shields.io/github/v/release/benpate/convert?include_prereleases&style=flat-square&color=brightgreen)
 
 
 ## Type Conversion Sugar
