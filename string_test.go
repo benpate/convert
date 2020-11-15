@@ -95,7 +95,7 @@ func TestStringerToString(t *testing.T) {
 	{
 		result, natural := StringOk(s, "")
 
-		assert.False(t, natural)
+		assert.True(t, natural)
 		assert.Equal(t, result, "hello")
 	}
 }

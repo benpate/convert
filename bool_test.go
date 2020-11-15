@@ -223,25 +223,25 @@ func TestStringToBool(t *testing.T) {
 	{
 		result, natural := BoolOk("true", true)
 		assert.True(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	{
 		result, natural := BoolOk("false", true)
 		assert.False(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	{
 		result, natural := BoolOk("true", false)
 		assert.True(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	{
 		result, natural := BoolOk("false", false)
 		assert.False(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	{
@@ -278,13 +278,13 @@ func TestStringerToBool(t *testing.T) {
 	{
 		result, natural := BoolOk(s, true)
 		assert.True(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	{
 		result, natural := BoolOk(s, false)
 		assert.True(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	s[0] = "false"
@@ -292,13 +292,13 @@ func TestStringerToBool(t *testing.T) {
 	{
 		result, natural := BoolOk(s, true)
 		assert.False(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 
 	{
 		result, natural := BoolOk(s, false)
 		assert.False(t, result)
-		assert.False(t, natural)
+		assert.True(t, natural)
 	}
 }
 

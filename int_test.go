@@ -23,7 +23,7 @@ func TestFloat32ToInt(t *testing.T) {
 
 	result, natural := IntOk(float32(10), -1)
 
-	require.False(t, natural)
+	require.True(t, natural)
 	require.Equal(t, result, int(10))
 }
 
@@ -31,7 +31,7 @@ func TestFloat64ToInt(t *testing.T) {
 
 	result, natural := IntOk(float64(10), -1)
 
-	require.False(t, natural)
+	require.True(t, natural)
 	require.Equal(t, result, int(10))
 }
 
