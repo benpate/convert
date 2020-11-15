@@ -1,6 +1,6 @@
 module github.com/benpate/convert
 
-go 1.14
+go 1.15
 
 require (
 	github.com/benpate/null v0.5.0
