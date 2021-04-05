@@ -17,4 +17,14 @@ func TestSliceOfString(t *testing.T) {
 		value := []interface{}{1, 2, 3}
 		require.Equal(t, []string{"1", "2", "3"}, SliceOfString(value))
 	}
+
+	{
+		value := []string{"1", "2", "3"}
+		require.Equal(t, []string{"1", "2", "3"}, SliceOfString(value))
+	}
+
+	{
+		value := "hello"
+		require.Equal(t, []string{"hello"}, SliceOfString(value))
+	}
 }

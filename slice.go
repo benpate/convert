@@ -1,12 +1,22 @@
 package convert
 
-func SliceOfString(value []interface{}) []string {
+func SliceOfString(value interface{}) []string {
 
-	result := make([]string, len(value))
+	switch value := value.(type) {
 
-	for index, v := range value {
-		result[index] = String(v)
+	case []interface{}:
+		result := make([]string, len(value))
+		for index, v := range value {
+			result[index] = String(v)
+		}
+		return result
+
+	case []string:
+		return value
+
+	case string:
+		return []string{value}
 	}
 
-	return result
+	return make([]string, 0)
 }
