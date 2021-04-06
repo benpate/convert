@@ -1,5 +1,7 @@
 package convert
 
+import "strconv"
+
 // SliceOfString converts the value into a slice of strings.
 // It works with interface{}, []interface{}, []string, and string values.
 // If the passed value cannot be converted, then an empty slice is returned.
@@ -7,18 +9,32 @@ func SliceOfString(value interface{}) []string {
 
 	switch value := value.(type) {
 
-	case []interface{}:
+	case string:
+		return []string{value}
+
+	case []string:
+		return value
+
+	case []int:
+		result := make([]string, len(value))
+		for index, v := range value {
+			result[index] = strconv.Itoa(v)
+		}
+		return result
+
+	case []float64:
 		result := make([]string, len(value))
 		for index, v := range value {
 			result[index] = String(v)
 		}
 		return result
 
-	case []string:
-		return value
-
-	case string:
-		return []string{value}
+	case []interface{}:
+		result := make([]string, len(value))
+		for index, v := range value {
+			result[index] = String(v)
+		}
+		return result
 	}
 
 	return make([]string, 0)
