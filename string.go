@@ -42,7 +42,7 @@ func StringOk(value interface{}, defaultValue string) (string, bool) {
 
 	case bool:
 
-		if v == true {
+		if v {
 			return "true", false
 		}
 
